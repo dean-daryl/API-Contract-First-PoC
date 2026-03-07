@@ -25,24 +25,13 @@ Add the contract JAR as a dependency in your `pom.xml`:
 </dependency>
 ```
 
-No extra steps needed — Maven resolves it from the registry automatically.
-
-```xml
-<repositories>
-    <repository>
-        <id>company-artifactory</id>
-        <url>https://artifactory.example.com/maven-releases</url>
-    </repository>
-</repositories>
-```
-
 **Local setup:**
 
 ```bash
 cd api-contract && mvn clean install
 ```
 
-Then use the same dependency block but with a SNAPSHOT prefix `dev-SNAPSHOT`.
+Then use the same dependency block but with a SNAPSHOT prefix `1.0.0-SNAPSHOT`.
 
 Then implement the generated interfaces in your controllers:
 
