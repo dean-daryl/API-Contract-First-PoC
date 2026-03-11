@@ -19,15 +19,19 @@ import jakarta.annotation.Generated;
  * BookRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 public class BookRequest {
 
+  @jakarta.validation.constraints.NotBlank(message = "{Title Required}")
   private String title;
 
+  @jakarta.validation.constraints.Pattern(regexp = "^(97[89])-\\d{1,5}-\\d{1,7}-\\d{1,7}-\\d$", message = "{validation.book.isbn.invalid}")
   private @Nullable String isbn;
 
+  @jakarta.validation.constraints.NotNull(message = "{validation.book.authorId.required}") @jakarta.validation.constraints.Min(value = 1, message = "{validation.book.authorId.min}")
   private Long authorId;
 
+  @jakarta.validation.constraints.Min(value = 1000, message = "{validation.book.publishedYear.min}") @jakarta.validation.constraints.Max(value = 2100, message = "{validation.book.publishedYear.max}")
   private @Nullable Integer publishedYear;
 
   public BookRequest() {
@@ -48,11 +52,11 @@ public class BookRequest {
   }
 
   /**
-   * Get title
+   * Title of the book
    * @return title
    */
-  @NotNull 
-  @Schema(name = "title", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Size(min = 1, max = 255) 
+  @Schema(name = "title", description = "Title of the book", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
     return title;
@@ -68,11 +72,11 @@ public class BookRequest {
   }
 
   /**
-   * Get isbn
+   * ISBN-13 of the book
    * @return isbn
    */
-  
-  @Schema(name = "isbn", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Pattern(regexp = "^(97[89])-\\\\d{1,5}-\\\\d{1,7}-\\\\d{1,7}-\\\\d$") @Size(max = 17) 
+  @Schema(name = "isbn", description = "ISBN-13 of the book", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isbn")
   public String getIsbn() {
     return isbn;
@@ -88,11 +92,12 @@ public class BookRequest {
   }
 
   /**
-   * Get authorId
+   * ID of the author
+   * minimum: 1
    * @return authorId
    */
-  @NotNull 
-  @Schema(name = "authorId", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Min(1L) 
+  @Schema(name = "authorId", description = "ID of the author", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("authorId")
   public Long getAuthorId() {
     return authorId;
@@ -108,11 +113,13 @@ public class BookRequest {
   }
 
   /**
-   * Get publishedYear
+   * Year the book was published
+   * minimum: 1000
+   * maximum: 2100
    * @return publishedYear
    */
-  
-  @Schema(name = "publishedYear", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Min(1000) @Max(2100) 
+  @Schema(name = "publishedYear", description = "Year the book was published", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("publishedYear")
   public Integer getPublishedYear() {
     return publishedYear;

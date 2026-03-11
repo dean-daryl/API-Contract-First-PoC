@@ -17,9 +17,9 @@ export interface Book {
     /**
      * Title of the book
      */
-    title: string;
+    bookTitle?: string;
     /**
-     * ISBN
+     * ISBN-13 of the book
      */
     isbn?: string;
     /**

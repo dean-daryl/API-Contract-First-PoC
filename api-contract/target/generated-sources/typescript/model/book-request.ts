@@ -10,9 +10,21 @@
 
 
 export interface BookRequest { 
+    /**
+     * Title of the book
+     */
     title: string;
+    /**
+     * ISBN-13 of the book
+     */
     isbn?: string;
+    /**
+     * ID of the author
+     */
     authorId: number;
+    /**
+     * Year the book was published
+     */
     publishedYear?: number;
 }
 

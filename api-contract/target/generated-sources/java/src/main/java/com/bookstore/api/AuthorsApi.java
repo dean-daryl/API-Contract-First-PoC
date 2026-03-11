@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Authors", description = "Operations for managing authors")
 public interface AuthorsApi {
@@ -44,7 +44,9 @@ public interface AuthorsApi {
      *
      * @param authorRequest  (required)
      * @return Author created successfully (status code 201)
-     *         or Invalid input (status code 400)
+     *         or Invalid input - validation failed (status code 400)
+     *         or Conflict - an author with the same name already exists (status code 409)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "createAuthor",
@@ -54,7 +56,13 @@ public interface AuthorsApi {
             @ApiResponse(responseCode = "201", description = "Author created successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = {
+            @ApiResponse(responseCode = "400", description = "Invalid input - validation failed", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Conflict - an author with the same name already exists", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -77,6 +85,7 @@ public interface AuthorsApi {
      * @param authorId  (required)
      * @return Author deleted successfully (status code 204)
      *         or Author not found (status code 404)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "deleteAuthor",
@@ -85,6 +94,9 @@ public interface AuthorsApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "Author deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -106,6 +118,7 @@ public interface AuthorsApi {
      * @param authorId  (required)
      * @return The requested author (status code 200)
      *         or Author not found (status code 404)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "getAuthorById",
@@ -116,6 +129,9 @@ public interface AuthorsApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))
             }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -163,8 +179,10 @@ public interface AuthorsApi {
      * @param authorId  (required)
      * @param authorRequest  (required)
      * @return Author updated successfully (status code 200)
-     *         or Invalid input (status code 400)
+     *         or Invalid input - validation failed (status code 400)
      *         or Author not found (status code 404)
+     *         or Conflict - an author with the same name already exists (status code 409)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "updateAuthor",
@@ -174,10 +192,16 @@ public interface AuthorsApi {
             @ApiResponse(responseCode = "200", description = "Author updated successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = {
+            @ApiResponse(responseCode = "400", description = "Invalid input - validation failed", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Conflict - an author with the same name already exists", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }

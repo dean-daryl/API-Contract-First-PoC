@@ -5,3 +5,4 @@
 /Users/darylmurenzi/Downloads/contract-first-architecture-demo/api-contract/target/generated-sources/java/src/main/java/com/bookstore/api/model/Book.java
 /Users/darylmurenzi/Downloads/contract-first-architecture-demo/api-contract/target/generated-sources/java/src/main/java/com/bookstore/api/model/BookRequest.java
 /Users/darylmurenzi/Downloads/contract-first-architecture-demo/api-contract/target/generated-sources/java/src/main/java/com/bookstore/api/model/ErrorResponse.java
+/Users/darylmurenzi/Downloads/contract-first-architecture-demo/api-contract/target/generated-sources/java/src/main/java/com/bookstore/api/model/ValidationError.java

@@ -15,11 +15,11 @@ export interface Author {
      */
     id: number;
     /**
-     * Full name
+     * Full name of the author
      */
-    name: string;
+    authorName?: string;
     /**
-     * Biography
+     * Biography of the author
      */
     bio?: string;
 }

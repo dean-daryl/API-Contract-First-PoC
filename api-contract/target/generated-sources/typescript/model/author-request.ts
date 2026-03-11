@@ -10,7 +10,13 @@
 
 
 export interface AuthorRequest { 
+    /**
+     * Full name of the author
+     */
     name: string;
+    /**
+     * Biography of the author
+     */
     bio?: string;
 }
 

@@ -19,12 +19,12 @@ import jakarta.annotation.Generated;
  * Book
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 public class Book {
 
   private Long id;
 
-  private String title;
+  private @Nullable String bookTitle;
 
   private @Nullable String isbn;
 
@@ -39,9 +39,8 @@ public class Book {
   /**
    * Constructor with only required parameters
    */
-  public Book(Long id, String title, Long authorId) {
+  public Book(Long id, Long authorId) {
     this.id = id;
-    this.title = title;
     this.authorId = authorId;
   }
 
@@ -65,24 +64,24 @@ public class Book {
     this.id = id;
   }
 
-  public Book title(String title) {
-    this.title = title;
+  public Book bookTitle(String bookTitle) {
+    this.bookTitle = bookTitle;
     return this;
   }
 
   /**
    * Title of the book
-   * @return title
+   * @return bookTitle
    */
-  @NotNull 
-  @Schema(name = "title", description = "Title of the book", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
+  @Size(min = 1, max = 255) 
+  @Schema(name = "bookTitle", description = "Title of the book", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("bookTitle")
+  public String getBookTitle() {
+    return bookTitle;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setBookTitle(String bookTitle) {
+    this.bookTitle = bookTitle;
   }
 
   public Book isbn(String isbn) {
@@ -91,11 +90,11 @@ public class Book {
   }
 
   /**
-   * ISBN
+   * ISBN-13 of the book
    * @return isbn
    */
-  
-  @Schema(name = "isbn", description = "ISBN", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Size(max = 17) 
+  @Schema(name = "isbn", description = "ISBN-13 of the book", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isbn")
   public String getIsbn() {
     return isbn;
@@ -112,9 +111,10 @@ public class Book {
 
   /**
    * ID of the author
+   * minimum: 1
    * @return authorId
    */
-  @NotNull 
+  @NotNull @Min(1L) 
   @Schema(name = "authorId", description = "ID of the author", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("authorId")
   public Long getAuthorId() {
@@ -132,9 +132,11 @@ public class Book {
 
   /**
    * Year published
+   * minimum: 1000
+   * maximum: 2100
    * @return publishedYear
    */
-  
+  @Min(1000) @Max(2100) 
   @Schema(name = "publishedYear", description = "Year published", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("publishedYear")
   public Integer getPublishedYear() {
@@ -155,7 +157,7 @@ public class Book {
     }
     Book book = (Book) o;
     return Objects.equals(this.id, book.id) &&
-        Objects.equals(this.title, book.title) &&
+        Objects.equals(this.bookTitle, book.bookTitle) &&
         Objects.equals(this.isbn, book.isbn) &&
         Objects.equals(this.authorId, book.authorId) &&
         Objects.equals(this.publishedYear, book.publishedYear);
@@ -163,7 +165,7 @@ public class Book {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, isbn, authorId, publishedYear);
+    return Objects.hash(id, bookTitle, isbn, authorId, publishedYear);
   }
 
   @Override
@@ -171,7 +173,7 @@ public class Book {
     StringBuilder sb = new StringBuilder();
     sb.append("class Book {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    bookTitle: ").append(toIndentedString(bookTitle)).append("\n");
     sb.append("    isbn: ").append(toIndentedString(isbn)).append("\n");
     sb.append("    authorId: ").append(toIndentedString(authorId)).append("\n");
     sb.append("    publishedYear: ").append(toIndentedString(publishedYear)).append("\n");

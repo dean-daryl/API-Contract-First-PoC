@@ -47,7 +47,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Book'
         '400':
-          description: Invalid input
+          description: Invalid input - validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - a book with the same ISBN already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -105,13 +117,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Book'
         '400':
-          description: Invalid input
+          description: Invalid input - validation failed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - a book with the same ISBN already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -133,6 +157,12 @@ paths:
           description: Book deleted successfully
         '404':
           description: Book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -172,7 +202,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Author'
         '400':
-          description: Invalid input
+          description: Invalid input - validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - an author with the same name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -204,6 +246,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updateAuthor
       summary: Update an author
@@ -230,13 +278,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Author'
         '400':
-          description: Invalid input
+          description: Invalid input - validation failed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Author not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - an author with the same name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -262,6 +322,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -276,18 +342,24 @@ components:
           type: integer
           format: int64
           description: Unique identifier
-        title:
+        bookTitle:
           type: string
+          minLength: 1
+          maxLength: 255
           description: Title of the book
         isbn:
           type: string
-          description: ISBN
+          maxLength: 17
+          description: ISBN-13 of the book
         authorId:
           type: integer
           format: int64
+          minimum: 1
           description: ID of the author
         publishedYear:
           type: integer
+          minimum: 1000
+          maximum: 2100
           description: Year published
 
     BookRequest:
@@ -298,13 +370,36 @@ components:
       properties:
         title:
           type: string
+          minLength: 1
+          maxLength: 255
+          x-field-extra-annotation: '@jakarta.validation.constraints.NotBlank(message = "{Title Required}")'
+          x-validation-message-key: Title Required
+          description: Title of the book
         isbn:
           type: string
+          pattern: '^(97[89])-\\d{1,5}-\\d{1,7}-\\d{1,7}-\\d$'
+          maxLength: 17
+          x-field-extra-annotation: '@jakarta.validation.constraints.Pattern(regexp = "^(97[89])-\\d{1,5}-\\d{1,7}-\\d{1,7}-\\d$", message = "{validation.book.isbn.invalid}")'
+          x-validation-message-key: validation.book.isbn.invalid
+          description: ISBN-13 of the book
         authorId:
           type: integer
           format: int64
+          minimum: 1
+          x-field-extra-annotation: '@jakarta.validation.constraints.NotNull(message = "{validation.book.authorId.required}") @jakarta.validation.constraints.Min(value = 1, message = "{validation.book.authorId.min}")'
+          x-validation-message-keys:
+            - validation.book.authorId.required
+            - validation.book.authorId.min
+          description: ID of the author
         publishedYear:
           type: integer
+          minimum: 1000
+          maximum: 2100
+          x-field-extra-annotation: '@jakarta.validation.constraints.Min(value = 1000, message = "{validation.book.publishedYear.min}") @jakarta.validation.constraints.Max(value = 2100, message = "{validation.book.publishedYear.max}")'
+          x-validation-message-keys:
+            - validation.book.publishedYear.min
+            - validation.book.publishedYear.max
+          description: Year the book was published
     Author:
       type: object
       required:
@@ -315,12 +410,15 @@ components:
           type: integer
           format: int64
           description: Unique identifier
-        name:
+        authorName:
           type: string
-          description: Full name
+          minLength: 1
+          maxLength: 150
+          description: Full name of the author
         bio:
           type: string
-          description: Biography
+          maxLength: 2000
+          description: Biography of the author
 
     AuthorRequest:
       type: object
@@ -329,8 +427,17 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
+          maxLength: 150
+          x-field-extra-annotation: '@jakarta.validation.constraints.NotBlank(message = "{validation.author.name.required}")'
+          x-validation-message-key: validation.author.name.required
+          description: Full name of the author
         bio:
           type: string
+          maxLength: 2000
+          x-field-extra-annotation: '@jakarta.validation.constraints.Size(max = 2000, message = "{validation.author.bio.maxLength}")'
+          x-validation-message-key: validation.author.bio.maxLength
+          description: Biography of the author
 
     ErrorResponse:
       type: object
@@ -348,3 +455,27 @@ components:
           type: string
           format: date-time
           description: When the error occurred
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          description: Field-level validation errors (present on 400 responses)
+
+    ValidationError:
+      type: object
+      required:
+        - field
+        - messageKey
+      properties:
+        field:
+          type: string
+          description: The field that failed validation
+        messageKey:
+          type: string
+          description: Translation key for the validation message (e.g. Title Required)
+        message:
+          type: string
+          description: Default English message (fallback when translation is not available)
+        rejectedValue:
+          type: object
+          description: The value that was rejected

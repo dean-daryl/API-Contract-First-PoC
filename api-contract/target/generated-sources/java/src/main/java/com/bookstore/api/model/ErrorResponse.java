@@ -2,9 +2,13 @@ package com.bookstore.api.model;
 
 import java.net.URI;
 import java.util.Objects;
+import com.bookstore.api.model.ValidationError;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -21,7 +25,7 @@ import jakarta.annotation.Generated;
  * ErrorResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 public class ErrorResponse {
 
   private Integer status;
@@ -30,6 +34,9 @@ public class ErrorResponse {
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private @Nullable OffsetDateTime timestamp;
+
+  @Valid
+  private List<@Valid ValidationError> validationErrors = new ArrayList<>();
 
   public ErrorResponse() {
     super();
@@ -103,6 +110,34 @@ public class ErrorResponse {
     this.timestamp = timestamp;
   }
 
+  public ErrorResponse validationErrors(List<@Valid ValidationError> validationErrors) {
+    this.validationErrors = validationErrors;
+    return this;
+  }
+
+  public ErrorResponse addValidationErrorsItem(ValidationError validationErrorsItem) {
+    if (this.validationErrors == null) {
+      this.validationErrors = new ArrayList<>();
+    }
+    this.validationErrors.add(validationErrorsItem);
+    return this;
+  }
+
+  /**
+   * Field-level validation errors (present on 400 responses)
+   * @return validationErrors
+   */
+  @Valid 
+  @Schema(name = "validationErrors", description = "Field-level validation errors (present on 400 responses)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("validationErrors")
+  public List<@Valid ValidationError> getValidationErrors() {
+    return validationErrors;
+  }
+
+  public void setValidationErrors(List<@Valid ValidationError> validationErrors) {
+    this.validationErrors = validationErrors;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -114,12 +149,13 @@ public class ErrorResponse {
     ErrorResponse errorResponse = (ErrorResponse) o;
     return Objects.equals(this.status, errorResponse.status) &&
         Objects.equals(this.message, errorResponse.message) &&
-        Objects.equals(this.timestamp, errorResponse.timestamp);
+        Objects.equals(this.timestamp, errorResponse.timestamp) &&
+        Objects.equals(this.validationErrors, errorResponse.validationErrors);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, message, timestamp);
+    return Objects.hash(status, message, timestamp, validationErrors);
   }
 
   @Override
@@ -129,6 +165,7 @@ public class ErrorResponse {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    validationErrors: ").append(toIndentedString(validationErrors)).append("\n");
     sb.append("}");
     return sb.toString();
   }

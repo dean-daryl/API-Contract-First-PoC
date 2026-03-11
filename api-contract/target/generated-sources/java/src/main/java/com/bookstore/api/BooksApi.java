@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 @Validated
 @Tag(name = "Books", description = "Operations for managing books")
 public interface BooksApi {
@@ -44,7 +44,9 @@ public interface BooksApi {
      *
      * @param bookRequest  (required)
      * @return Book created successfully (status code 201)
-     *         or Invalid input (status code 400)
+     *         or Invalid input - validation failed (status code 400)
+     *         or Conflict - a book with the same ISBN already exists (status code 409)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "createBook",
@@ -54,7 +56,13 @@ public interface BooksApi {
             @ApiResponse(responseCode = "201", description = "Book created successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = {
+            @ApiResponse(responseCode = "400", description = "Invalid input - validation failed", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Conflict - a book with the same ISBN already exists", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -77,6 +85,7 @@ public interface BooksApi {
      * @param bookId  (required)
      * @return Book deleted successfully (status code 204)
      *         or Book not found (status code 404)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "deleteBook",
@@ -85,6 +94,9 @@ public interface BooksApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "Book deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Book not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -106,6 +118,7 @@ public interface BooksApi {
      * @param bookId  (required)
      * @return The requested book (status code 200)
      *         or Book not found (status code 404)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "getBookById",
@@ -116,6 +129,9 @@ public interface BooksApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
             @ApiResponse(responseCode = "404", description = "Book not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }
@@ -163,8 +179,10 @@ public interface BooksApi {
      * @param bookId  (required)
      * @param bookRequest  (required)
      * @return Book updated successfully (status code 200)
-     *         or Invalid input (status code 400)
+     *         or Invalid input - validation failed (status code 400)
      *         or Book not found (status code 404)
+     *         or Conflict - a book with the same ISBN already exists (status code 409)
+     *         or Internal server error (status code 500)
      */
     @Operation(
         operationId = "updateBook",
@@ -174,10 +192,16 @@ public interface BooksApi {
             @ApiResponse(responseCode = "200", description = "Book updated successfully", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = {
+            @ApiResponse(responseCode = "400", description = "Invalid input - validation failed", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Book not found", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "409", description = "Conflict - a book with the same ISBN already exists", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
         }

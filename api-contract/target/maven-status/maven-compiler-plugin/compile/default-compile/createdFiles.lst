@@ -1,3 +1,4 @@
+com/bookstore/api/model/ValidationError.class
 com/bookstore/api/model/Author.class
 com/bookstore/api/model/ErrorResponse.class
 com/bookstore/api/model/AuthorRequest.class

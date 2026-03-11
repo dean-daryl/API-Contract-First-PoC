@@ -91,6 +91,8 @@
                             <generatorName>typescript-angular</generatorName>
                             <output>${project.build.directory}/generated-sources/typescript</output>
                             <configOptions>
+                                <npmName>bookstore-api-client</npmName>
+                                <npmVersion>1.0.0</npmVersion>
                                 <providedIn>root</providedIn>
                                 <useTags>true</useTags>
                                 <withInterfaces>true</withInterfaces>

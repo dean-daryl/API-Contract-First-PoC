@@ -19,12 +19,12 @@ import jakarta.annotation.Generated;
  * Author
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 public class Author {
 
   private Long id;
 
-  private String name;
+  private @Nullable String authorName;
 
   private @Nullable String bio;
 
@@ -35,9 +35,8 @@ public class Author {
   /**
    * Constructor with only required parameters
    */
-  public Author(Long id, String name) {
+  public Author(Long id) {
     this.id = id;
-    this.name = name;
   }
 
   public Author id(Long id) {
@@ -60,24 +59,24 @@ public class Author {
     this.id = id;
   }
 
-  public Author name(String name) {
-    this.name = name;
+  public Author authorName(String authorName) {
+    this.authorName = authorName;
     return this;
   }
 
   /**
-   * Full name
-   * @return name
+   * Full name of the author
+   * @return authorName
    */
-  @NotNull 
-  @Schema(name = "name", description = "Full name", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @Size(min = 1, max = 150) 
+  @Schema(name = "authorName", description = "Full name of the author", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("authorName")
+  public String getAuthorName() {
+    return authorName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setAuthorName(String authorName) {
+    this.authorName = authorName;
   }
 
   public Author bio(String bio) {
@@ -86,11 +85,11 @@ public class Author {
   }
 
   /**
-   * Biography
+   * Biography of the author
    * @return bio
    */
-  
-  @Schema(name = "bio", description = "Biography", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Size(max = 2000) 
+  @Schema(name = "bio", description = "Biography of the author", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bio")
   public String getBio() {
     return bio;
@@ -110,13 +109,13 @@ public class Author {
     }
     Author author = (Author) o;
     return Objects.equals(this.id, author.id) &&
-        Objects.equals(this.name, author.name) &&
+        Objects.equals(this.authorName, author.authorName) &&
         Objects.equals(this.bio, author.bio);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, bio);
+    return Objects.hash(id, authorName, bio);
   }
 
   @Override
@@ -124,7 +123,7 @@ public class Author {
     StringBuilder sb = new StringBuilder();
     sb.append("class Author {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    authorName: ").append(toIndentedString(authorName)).append("\n");
     sb.append("    bio: ").append(toIndentedString(bio)).append("\n");
     sb.append("}");
     return sb.toString();

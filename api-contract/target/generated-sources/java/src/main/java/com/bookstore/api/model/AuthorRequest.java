@@ -19,11 +19,13 @@ import jakarta.annotation.Generated;
  * AuthorRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-07T14:42:09.989632+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-03-11T12:22:08.883947+02:00[Africa/Kigali]", comments = "Generator version: 7.12.0")
 public class AuthorRequest {
 
+  @jakarta.validation.constraints.NotBlank(message = "{validation.author.name.required}")
   private String name;
 
+  @jakarta.validation.constraints.Size(max = 2000, message = "{validation.author.bio.maxLength}")
   private @Nullable String bio;
 
   public AuthorRequest() {
@@ -43,11 +45,11 @@ public class AuthorRequest {
   }
 
   /**
-   * Get name
+   * Full name of the author
    * @return name
    */
-  @NotNull 
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Size(min = 1, max = 150) 
+  @Schema(name = "name", description = "Full name of the author", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -63,11 +65,11 @@ public class AuthorRequest {
   }
 
   /**
-   * Get bio
+   * Biography of the author
    * @return bio
    */
-  
-  @Schema(name = "bio", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Size(max = 2000) 
+  @Schema(name = "bio", description = "Biography of the author", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bio")
   public String getBio() {
     return bio;

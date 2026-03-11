@@ -18,5 +18,9 @@ model/book-request.ts
 model/book.ts
 model/error-response.ts
 model/models.ts
+model/validation-error.ts
+ng-package.json
+package.json
 param.ts
+tsconfig.json
 variables.ts

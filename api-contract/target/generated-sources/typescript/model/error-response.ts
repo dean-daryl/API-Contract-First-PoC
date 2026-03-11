@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ValidationError } from './validation-error';
 
 
 export interface ErrorResponse { 
@@ -22,5 +23,9 @@ export interface ErrorResponse {
      * When the error occurred
      */
     timestamp?: string;
+    /**
+     * Field-level validation errors (present on 400 responses)
+     */
+    validationErrors?: Array<ValidationError>;
 }
 
