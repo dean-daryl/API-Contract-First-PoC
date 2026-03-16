@@ -52,18 +52,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                bookInvalidData:
+                  summary: Book Invalid Data
+                  value:
+                    errorCode: "BOOK_INVALID_DATA"
+                    status: 400
+                    message: "Invalid book data provided"
+                    timestamp: "2026-03-16T10:30:00Z"
+                    validationErrors:
+                      - field: "title"
+                        messageKey: "Title Required"
+                        message: "Title is required"
         '409':
           description: Conflict - a book with the same ISBN already exists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                bookAlreadyExists:
+                  summary: Book Already Exists
+                  value:
+                    errorCode: "BOOK_ALREADY_EXISTS"
+                    status: 409
+                    message: "A book with this ISBN already exists"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                internalError:
+                  summary: Internal Server Error
+                  value:
+                    errorCode: "INTERNAL_SERVER_ERROR"
+                    status: 500
+                    message: "An unexpected error occurred"
+                    timestamp: "2026-03-16T10:30:00Z"
 
   /books/{bookId}:
     get:
@@ -91,6 +119,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                bookNotFound:
+                  summary: Book Not Found
+                  value:
+                    errorCode: "BOOK_NOT_FOUND"
+                    status: 404
+                    message: "The requested book could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
     put:
       operationId: updateBook
       summary: Update a book
@@ -122,24 +158,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                validationError:
+                  summary: Validation Error
+                  value:
+                    errorCode: "BOOK_INVALID_DATA"
+                    status: 400
+                    message: "Invalid book data provided"
+                    timestamp: "2026-03-16T10:30:00Z"
         '404':
           description: Book not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                notFound:
+                  summary: Book Not Found
+                  value:
+                    errorCode: "BOOK_NOT_FOUND"
+                    status: 404
+                    message: "The requested book could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
         '409':
           description: Conflict - a book with the same ISBN already exists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                conflict:
+                  summary: ISBN Conflict
+                  value:
+                    errorCode: "BOOK_ALREADY_EXISTS"
+                    status: 409
+                    message: "A book with this ISBN already exists"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Update Failed
+                  value:
+                    errorCode: "BOOK_UPDATE_FAILED"
+                    status: 500
+                    message: "Failed to update the book"
+                    timestamp: "2026-03-16T10:30:00Z"
     delete:
       operationId: deleteBook
       summary: Delete a book
@@ -161,12 +229,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                notFound:
+                  summary: Book Not Found
+                  value:
+                    errorCode: "BOOK_NOT_FOUND"
+                    status: 404
+                    message: "The requested book could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Delete Failed
+                  value:
+                    errorCode: "BOOK_DELETE_FAILED"
+                    status: 500
+                    message: "Failed to delete the book"
+                    timestamp: "2026-03-16T10:30:00Z"
 
   /authors:
     get:
@@ -207,18 +291,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                validationError:
+                  summary: Validation Error
+                  value:
+                    errorCode: "AUTHOR_INVALID_DATA"
+                    status: 400
+                    message: "Invalid author data provided"
+                    timestamp: "2026-03-16T10:30:00Z"
+                    validationErrors:
+                      - field: "name"
+                        messageKey: "validation.author.name.required"
+                        message: "Author name is required"
         '409':
           description: Conflict - an author with the same name already exists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                authorExists:
+                  summary: Author Already Exists
+                  value:
+                    errorCode: "AUTHOR_ALREADY_EXISTS"
+                    status: 409
+                    message: "An author with this name already exists"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Server Error
+                  value:
+                    errorCode: "INTERNAL_SERVER_ERROR"
+                    status: 500
+                    message: "An unexpected error occurred"
+                    timestamp: "2026-03-16T10:30:00Z"
 
   /authors/{authorId}:
     get:
@@ -246,12 +358,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                authorNotFound:
+                  summary: Author Not Found
+                  value:
+                    errorCode: "AUTHOR_NOT_FOUND"
+                    status: 404
+                    message: "The requested author could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Server Error
+                  value:
+                    errorCode: "INTERNAL_SERVER_ERROR"
+                    status: 500
+                    message: "An unexpected error occurred"
+                    timestamp: "2026-03-16T10:30:00Z"
     put:
       operationId: updateAuthor
       summary: Update an author
@@ -283,24 +411,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                validationError:
+                  summary: Validation Error
+                  value:
+                    errorCode: "AUTHOR_INVALID_DATA"
+                    status: 400
+                    message: "Invalid author data provided"
+                    timestamp: "2026-03-16T10:30:00Z"
         '404':
           description: Author not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                notFound:
+                  summary: Author Not Found
+                  value:
+                    errorCode: "AUTHOR_NOT_FOUND"
+                    status: 404
+                    message: "The requested author could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
         '409':
           description: Conflict - an author with the same name already exists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                conflict:
+                  summary: Author Name Conflict
+                  value:
+                    errorCode: "AUTHOR_ALREADY_EXISTS"
+                    status: 409
+                    message: "An author with this name already exists"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Update Failed
+                  value:
+                    errorCode: "AUTHOR_UPDATE_FAILED"
+                    status: 500
+                    message: "Failed to update the author"
+                    timestamp: "2026-03-16T10:30:00Z"
     delete:
       operationId: deleteAuthor
       summary: Delete an author
@@ -322,12 +482,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                notFound:
+                  summary: Author Not Found
+                  value:
+                    errorCode: "AUTHOR_NOT_FOUND"
+                    status: 404
+                    message: "The requested author could not be found"
+                    timestamp: "2026-03-16T10:30:00Z"
+        '409':
+          description: Conflict - author cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                conflict:
+                  summary: Author Has Books
+                  value:
+                    errorCode: "AUTHOR_HAS_BOOKS"
+                    status: 409
+                    message: "Cannot delete author with existing books"
+                    timestamp: "2026-03-16T10:30:00Z"
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverError:
+                  summary: Delete Failed
+                  value:
+                    errorCode: "AUTHOR_DELETE_FAILED"
+                    status: 500
+                    message: "Failed to delete the author"
+                    timestamp: "2026-03-16T10:30:00Z"
 
 components:
   schemas:
@@ -442,15 +632,22 @@ components:
     ErrorResponse:
       type: object
       required:
+        - errorCode
         - status
         - message
       properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code (e.g., BOOK_NOT_FOUND, AUTHOR_ALREADY_EXISTS). See /api/docs/error-codes for full catalog.
+          example: "BOOK_NOT_FOUND"
         status:
           type: integer
           description: HTTP status code
+          example: 404
         message:
           type: string
           description: Error message
+          example: "The requested book could not be found"
         timestamp:
           type: string
           format: date-time
