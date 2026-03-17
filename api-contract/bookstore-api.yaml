@@ -638,8 +638,7 @@ components:
       properties:
         errorCode:
           type: string
-          description: Machine-readable error code (e.g., BOOK_NOT_FOUND, AUTHOR_ALREADY_EXISTS). See /api/docs/error-codes for full catalog.
-          example: "BOOK_NOT_FOUND"
+          description: error code
         status:
           type: integer
           description: HTTP status code
